@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calmionix SMP | Official Store & Info</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #6366f1;
+            --accent: #fbbf24;
+            --bg: #0f172a;
+            --card: rgba(30, 41, 59, 0.7);
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body.light {
+            --bg: #f1f5f9;
+            --card: rgba(255, 255, 255, 0.8);
+            --text: #0f172a;
+            --muted: #64748b;
+            --glass: rgba(0, 0, 0, 0.03);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background 0.4s ease;
+        }
+
+        /* Particles Background Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .hero {
+            padding: 100px 20px 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.5));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-item {
+            background: var(--glass);
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); transform: scale(1.05); }
+
+        .btn-wa { background: #22c55e; color: white; }
+        .btn-wa:hover { background: #16a34a; transform: scale(1.05); }
+
+        .btn-outline { background: transparent; border: 1.5px solid var(--glass-border); color: var(--text); }
+        .btn-outline:hover { background: var(--glass); }
+
+        .grid-shop {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .rank-card {
+            background: var(--glass);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .rank-card h3 { font-size: 1.4rem; color: var(--accent); }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        .benefit-item::before { content: '✓'; color: var(--primary); font-weight: bold; }
+
+        .ip-box {
+            background: var(--glass);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        #progressBar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            width: 0;
+            z-index: 1001;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: var(--bg);
+            border: 1px solid var(--glass-border);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 32px;
+            position: relative;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(100px);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        footer {
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero { padding-top: 60px; }
+            .ip-box { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body class="dark">
+
+<canvas id="particles-canvas"></canvas>
+<div id="progressBar"></div>
+
+<header>
+    <nav>
+        <div class="logo-area">
+            <img src="web.png" alt="Logo" class="logo-img" onerror="this.src='https://ui-avatars.com/api/?name=C&background=3b82f6&color=fff'">
+            <span>Calmionix SMP</span>
+        </div>
+        <div class="nav-links">
+            <a href="#about" onmouseenter="playHover()">About</a>
+            <a href="#server" onmouseenter="playHover()">Server</a>
+            <a href="#rank" onmouseenter="playHover()">Rank</a>
+            <a href="#ratecard" onmouseenter="playHover()">Rates</a>
+            <button class="btn btn-outline" onclick="toggleTheme(); playClick()" style="padding: 8px 12px;">🌓</button>
+        </div>
+    </nav>
+</header>
+
+<div class="hero">
+    <img src="web.png" alt="Calmionix Logo" class="hero-logo" onerror="this.style.display='none'">
+    <h1>Calmionix SMP</h1>
+    <p>Dunia survival terbaik dengan sistem ekonomi stabil, fitur gacha menarik, dan komunitas yang ramah. Mainkan sekarang!</p>
+    <div style="display: flex; gap: 15px; justify-content: center;">
+        <a href="#server" class="btn btn-primary" onclick="playClick()">Mulai Bermain</a>
+        <a href="#rank" class="btn btn-outline" onclick="playClick()">Donasi Rank</a>
+    </div>
+</div>
+
+<div class="container">
+    <section id="about" class="card">
+        <h2>✨ Tentang Kami</h2>
+        <p style="margin-bottom: 20px;">Owner & Creator dari Server Calmionix SMP. Kami berdedikasi membangun komunitas Minecraft terbaik di Indonesia.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <a href="https://youtube.com/@calmionix" target="_blank" class="btn btn-outline" onclick="playClick()">YouTube</a>
+            <a href="https://www.tiktok.com/@calmionix.id" target="_blank" class="btn btn-outline" onclick="playClick()">TikTok</a>
+            <a href="https://wa.me/6282130570915" target="_blank" class="btn btn-wa" onclick="playClick()">WhatsApp Admin</a>
+        </div>
+    </section>
+
+    <section id="server" class="card">
+        <h2>🎮 Fitur & Akses</h2>
+        <div class="feature-grid">
+            <div class="feature-item">Survival</div>
+            <div class="feature-item">Economy</div>
+            <div class="feature-item">Quest</div>
+            <div class="feature-item">Casino</div>
+            <div class="feature-item">Gacha</div>
+            <div class="feature-item">Jobs</div>
+            <div class="feature-item">PVP Arena</div>
+            <div class="feature-item">Shop</div>
+        </div>
+
+        <div class="ip-box">
+            <div>
+                <span style="color: var(--muted); font-size: 0.8rem; display: block;">IP ADDRESS</span>
+                <code style="font-weight: 700; font-size: 1.2rem;">play.calmionix.my.id</code>
+            </div>
+            <button class="btn btn-primary" onclick="copyIP(); playClick()">Salin IP</button>
+            <div>
+                <span style="color: var(--muted); font-size: 0.8rem; display: block;">PORT</span>
+                <code style="font-weight: 700; font-size: 1.2rem;">19139</code>
+            </div>
+            <button class="btn btn-outline" onclick="copyPort(); playClick()">Salin Port</button>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9rem; text-align: center; color: var(--muted);">Support: Java & Bedrock (Semua Versi)</p>
+    </section>
+
+    <section id="rank" class="card">
+        <h2>💎 Official Store</h2>
+        <div class="grid-shop">
+            <!-- Rank VIP -->
+            <div class="rank-card">
+                <h3>VIP <span style="font-size: 0.8rem; color: var(--muted)">Rp10k</span></h3>
+                <div class="benefits">
+                    <div class="benefit-item">Akses /fly</div>
+                    <div class="benefit-item">Akses /feed</div>
+                    <div class="benefit-item">Cosmetic 25%</div>
+                    <div class="benefit-item">Money: 20,000</div>
+                </div>
+                <button class="btn btn-primary" onclick="openPay('VIP', '10.000', 'Fly, Feed, Echest, Prefix, 20k Money'); playClick()">Beli Sekarang</button>
+            </div>
+            <!-- Rank VIP+ -->
+            <div class="rank-card">
+                <h3>VIP+ <span style="font-size: 0.8rem; color: var(--muted)">Rp25k</span></h3>
+                <div class="benefits">
+                    <div class="benefit-item">Semua Fitur VIP</div>
+                    <div class="benefit-item">Akses /repair</div>
+                    <div class="benefit-item">Cosmetic 50%</div>
+                    <div class="benefit-item">Money: 35,000</div>
+                </div>
+                <button class="btn btn-primary" onclick="openPay('VIP+', '25.000', 'Semua VIP, Repair, Kit VIP+, 35k Money'); playClick()">Beli Sekarang</button>
+            </div>
+            <!-- Rank MVP -->
+            <div class="rank-card" style="border-color: var(--accent);">
+                <h3>MVP <span style="font-size: 0.8rem; color: var(--muted)">Rp45k</span></h3>
+                <div class="benefits">
+                    <div class="benefit-item">Semua Fitur VIP+</div>
+                    <div class="benefit-item">Akses /heal</div>
+                    <div class="benefit-item">Cosmetic 100%</div>
+                    <div class="benefit-item">Money: 50,000</div>
+                </div>
+                <button class="btn btn-primary" style="background: var(--accent); color: #000;" onclick="openPay('MVP', '45.000', 'Semua Fitur, Heal, Kit MVP, 50k Money'); playClick()">Beli Sekarang</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal" id="payModal">
+    <div class="modal-content">
+        <h2 id="m-title">Detail Pesanan</h2>
+        <p id="m-desc" style="color: var(--muted); margin-bottom: 20px;"></p>
+        <div id="m-benefits" style="margin-bottom: 25px;"></div>
+        <div style="display: flex; gap: 10px;">
+            <a id="m-link" href="#" target="_blank" class="btn btn-wa" style="flex: 1; justify-content: center;">Konfirmasi WA</a>
+            <button class="btn btn-outline" onclick="closePay(); playClick()">Batal</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast">Berhasil disalin!</div>
+
+<footer>
+    <img src="web.png" alt="Footer Logo" style="width: 50px; opacity: 0.5; margin-bottom: 20px;">
+    <p>© 2024 Calmionix SMP. Tidak berafiliasi dengan Mojang AB.</p>
+</footer>
+
+<script>
+    // --- AUDIO SYSTEM (Synthesized) ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playClick() {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+    }
+
+    function playHover() {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(440, audioCtx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+    }
+
+    // --- PARTICLES BACKGROUND ---
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.opacity = Math.random() * 0.5;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+        }
+        draw() {
+            ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // --- LOGIC ---
+    function toggleTheme() {
+        document.body.classList.toggle("light");
+        localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark");
+    }
+    if (localStorage.getItem("theme") == "light") document.body.classList.add("light");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('show');
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(card => observer.observe(card));
+
+    window.addEventListener('scroll', () => {
+        let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        let scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
+    });
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.style.transform = 'translateY(0)';
+        setTimeout(() => { toast.style.transform = 'translateY(100px)'; }, 3000);
+    }
+
+    function copyIP() {
+        const el = document.createElement('textarea');
+        el.value = 'play.calmionix.my.id';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast("IP Server disalin!");
+    }
+
+    function copyPort() {
+        const el = document.createElement('textarea');
+        el.value = '19139';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast("Port disalin!");
+    }
+
+    function openPay(name, price, benefits) {
+        document.getElementById('m-title').innerText = "Beli Rank " + name;
+        document.getElementById('m-desc').innerText = "Harga: Rp " + price;
+        const bList = benefits.split(',').map(b => `<div class="benefit-item">${b.trim()}</div>`).join('');
+        document.getElementById('m-benefits').innerHTML = bList;
+        document.getElementById('m-link').href = `https://wa.me/6282130570915?text=Halo Admin Calmionix, saya ingin membeli Rank ${name} seharga Rp ${price}`;
+        document.getElementById('payModal').style.display = 'flex';
+    }
+
+    function closePay() {
+        document.getElementById('payModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>
